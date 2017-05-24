@@ -79,7 +79,11 @@
 
             <div class="content">
                 <div class="title m-b-md">
+                     @if (Auth::check())
+                     Welcome back
+                     @else
                     Welcome, register to start uploading.
+                    @endif
                 </div>
 
                
