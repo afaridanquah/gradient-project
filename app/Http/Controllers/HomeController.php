@@ -36,14 +36,16 @@ class HomeController extends Controller
 
     public function addImage(UploadsRequest $request)
     {
-        $fileArray = [];
-        $upload = 'photos/';
+        $fileArray = []; //Declare array of files
+        $upload = 'photos/'; // upload directory or path
         $image_array = $request ->file('file');
+        //Generate filename for each file and upload to the photos directory
         foreach ($image_array as $key => $image) {
           $name = str_random(10). time() .'.' .$image->getClientOriginalExtension();
           $path = move_uploaded_file($image->getPathName(), $upload. $name);
           $fileArray[] = $name;
        }
+       //Save each file to database 
        foreach ($fileArray as $key => $file) {
         $upload = new Upload;
         $upload->file = $file;
@@ -51,8 +53,6 @@ class HomeController extends Controller
         $upload->filename = $request->filename;
         $upload->save();
         }
-        // Session::flash('fileUpload', 'New record created successfully');
-        // return redirect('/home');
     }
 
 }
