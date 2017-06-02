@@ -6,52 +6,29 @@
 
 @section('content')
 <div class="container">
-        <gradient-upload>
-            {{Form::open(['action'=>'HomeController@addImage','class'=>'dropzone','id'=>'my-awesome-dropzone'])}}
-                <div class="form-group{{ $errors->has('filename') ? ' has-error' : '' }}">
-                    <label for="filename">File name</label>
-                    <input type="text" class="form-control" name="filename" autofocus>
-                    @if ($errors->has('filename'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('filename') }}</strong>
-                            </span>
-                        @endif
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-success">Submit</button>
-                </div>
-                <hr>
-            {{Form::close()}}   
-        </gradient-upload>
-            
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-           <div class="panel panel-white">
-               <div class="panel-heading">List of Uploaded images</div>
-                   <div class="panel-body">
-                       <table class="table">
-                           <thead>
-                                
-                           </thead>
-                           <tbody>
-                                @foreach($uploads->chunk(3) as $chunk)
-                                    <div class="row">
-                                        @foreach ($chunk as $upload)
-                                            <div class="col-xs-4" style="margin-bottom: 30px;">
-                                            <img class="img-responsive" style="height: 200px;" src="{{ asset("photos/$upload->file") }}">
-                                            </div>
-                                        @endforeach
-                                    </div>
-                               @endforeach
-                           </tbody>
-                       </table>
-                   </div>
+    <gradient-panel title="File upload">
+      {{Form::open(['action'=>'HomeController@addImage','class'=>'dropzone','id'=>'my-awesome-dropzone'])}}
+      <gradient-form></gradient-form> 
+      {{Form::close()}}
+    </gradient-panel> 
 
-               </div>
-           </div> 
-
-        </div>
-        <center>{{ $uploads->links() }}</center>
+    <!-- list of uploaded images  -->
+    <gradient-panel title="List of Uploaded images">
+      <table class="table">
+           <tbody>
+                @foreach($uploads->chunk(3) as $chunk)
+                    <div class="row">
+                        @foreach ($chunk as $upload)
+                            <div class="col-xs-4" style="margin-bottom: 30px;">
+                            <img class="img-responsive" style="height: 200px;" src="{{ asset("photos/$upload->file") }}">
+                            </div>
+                        @endforeach
+                    </div>
+               @endforeach
+           </tbody>
+       </table>
+    </gradient-panel>  
+    <center>{{ $uploads->links() }}</center>
 
     </div>
 </div>
@@ -63,7 +40,20 @@
     @include('Alerts::show')
     {!! Html::script('js/packages/dropzone.js') !!}
     {!! Html::script('js/packages/dropzone-custom.js') !!}
+    <!-- {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.7.2/parsley.js') !!} -->
 
     <!-- {!! Html::script('/assets/js/dropzone-config.js') !!} -->
+     <!--  <script type="text/javascript">
+        window.ParsleyConfig = {
+            errorsWrapper: '<div></div>',
+            errorTemplate: '<span class="error-text" style="color:red"></span>',
+            classHandler: function (el) {
+                return el.$element.closest('input');
+            },
+            successClass: 'valid',
+            errorClass: 'invalid'
+        };
+    </script> -->
+    
     
 @endsection

@@ -17,6 +17,8 @@ window.Vue = require('vue');
 
 Vue.component('example', require('./components/Example.vue'));
 Vue.component('gradient-upload', require('./components/DropzoneUpload.vue'));
+Vue.component('gradient-panel', require('./components/Gradientpanel.vue'));
+Vue.component('gradient-form', require('./components/GradientForm.vue'));
 
 const app = new Vue({
     el: '#app'
